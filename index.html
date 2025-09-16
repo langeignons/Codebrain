@@ -1,94 +1,27 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>ReviveMC - Accueil</title>
-  <meta name="description" content="Circuit partenaires ReviveMC - cumule des points officiels et qualifie-toi pour la grande finale BedWars.">
-  <link rel="stylesheet" href="style.css">
-  <script src="data.js"></script>
-</head>
-<body>
-  <header>
-    <div class="logo">ReviveMC</div>
-    <nav>
-      <a href="index.html" class="active">Accueil</a>
-      <a href="calendrier.html">Calendrier</a>
-      <a href="classement.html">Classement</a>
-      <a href="#inscrire">Inscrire son tournoi</a>
-    </nav>
-    <button id="toggleTheme">🌙</button>
-  </header>
-  <main class="container">
-    <section class="hero">
-      <h1>ReviveMC — Circuit Partenaires</h1>
-      <p>Cumule des points officiels sur des tournois partenaires. Les <strong>8 meilleurs</strong> vont en <strong>Finale BedWars</strong>.</p>
-      <p>
-        <a href="calendrier.html" class="btn">Voir le calendrier</a>
-        <a href="classement.html" class="btn">Voir le classement</a>
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>Finale BedWars (Top 8)</h2>
-      <p>Format 4v4 BedWars avec les 8 meilleurs joueurs du classement officiel. Phase de poules → demi-finales → grande finale.</p>
-    </section>
-
-    <section id="nextTournament" class="card">
-      <h2>Prochain tournoi</h2>
-      <div id="tournamentCard"></div>
-      <div id="countdown"></div>
-    </section>
-
-    <section id="inscrire" class="card">
-      <h2>Comment inscrire son tournoi</h2>
-      <ol>
-        <li>Contacter <strong>@Jojo</strong> sur Discord</li>
-        <li>Rejoindre le <a href="#">Discord ReviveMC</a></li>
-        <li>Préparer : règles, format, date/heure, capacité, barème proposé</li>
-        <li>Attendre validation “Partenaire ReviveMC” + ajout au calendrier</li>
-      </ol>
-      <p><strong>FAQ rapide :</strong> validation sous 1 semaine, branding ReviveMC obligatoire.</p>
-    </section>
-  </main>
-  <footer>
-    <span id="lastUpdate"></span>
-  </footer>
-
-  <script>
-    function formatDateFR(dateStr){
-      return new Intl.DateTimeFormat('fr-FR',{dateStyle:'full',timeStyle:'short'}).format(new Date(dateStr));
-    }
-    function getNextTournament(data){
-      const now=new Date();
-      return data.tournaments.filter(t=>new Date(t.date)>now).sort((a,b)=>new Date(a.date)-new Date(b.date))[0];
-    }
-    function renderNextTournamentCard(){
-      const t=getNextTournament(window.REVIVE_DATA);
-      if(!t)return;
-      document.getElementById('tournamentCard').innerHTML=`
-        <p><strong>${t.name}</strong> — ${t.partner}</p>
-        <p>${formatDateFR(t.date)} • ${t.format} ${t.mode}</p>
-        <p>Status: ${t.status}</p>
-      `;
-      const target=new Date(t.date).getTime();
-      const el=document.getElementById('countdown');
-      setInterval(()=>{
-        const diff=target-Date.now();
-        if(diff<=0){el.textContent="En cours ou terminé";return;}
-        const d=Math.floor(diff/86400000),
-              h=Math.floor((diff%86400000)/3600000),
-              m=Math.floor((diff%3600000)/60000),
-              s=Math.floor((diff%60000)/1000);
-        el.textContent=`${d}j ${h}h ${m}m ${s}s`;
-      },1000);
-    }
-    document.getElementById('lastUpdate').textContent="Dernière mise à jour : "+formatDateFR(window.REVIVE_DATA.updatedAt);
-    renderNextTournamentCard();
-
-    const toggleBtn=document.getElementById('toggleTheme');
-    function setTheme(mode){document.documentElement.classList.toggle('light',mode==='light');localStorage.setItem('theme',mode);}
-    toggleBtn.onclick=()=>{const mode=document.documentElement.classList.contains('light')?'dark':'light';setTheme(mode);};
-    if(localStorage.getItem('theme')==='light')setTheme('light');
-  </script>
-</body>
-</html>
+:root{
+  --bg-1:#0B0F1A; --bg-2:#111626; --card:#0F1424; --border:#1C2440;
+  --text:#E8ECF1; --muted:#9AA7B2; --primary:#2D7DFF; --accent:#FFCC00;
+  --danger:#FF4D4D; --ok:#00D68F;
+}
+html{background:var(--bg-1);color:var(--text);font-family:sans-serif;}
+html.light{--bg-1:#FFFFFF;--bg-2:#F5F7FB;--card:#FFFFFF;--border:#E6ECF5;--text:#0B0F1A;--muted:#516173;}
+*{box-sizing:border-box;margin:0;padding:0;}
+a{color:var(--primary);text-decoration:none;}
+.container{max-width:1100px;margin:auto;padding:1rem;}
+header{background:var(--bg-2);padding:1rem;position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;}
+nav a{margin:0 0.5rem;padding:0.3rem 0.6rem;border-radius:6px;}
+nav a.active,nav a:hover{background:var(--primary);color:#fff;}
+button,.btn{background:var(--primary);color:#fff;border:none;padding:0.5rem 1rem;border-radius:8px;cursor:pointer;}
+button:hover,.btn:hover{opacity:0.9;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;margin:1rem 0;transition:transform .2s, box-shadow .2s;}
+.card:hover{transform:scale(1.02);box-shadow:0 0 8px var(--primary);}
+table{width:100%;border-collapse:collapse;margin-top:1rem;}
+th,td{padding:0.6rem;text-align:left;border-bottom:1px solid var(--border);}
+th{background:var(--bg-2);position:sticky;top:60px;}
+input{padding:0.5rem;border:1px solid var(--border);border-radius:6px;margin:0.5rem 0;width:100%;}
+.badge{padding:0.2rem 0.6rem;border-radius:6px;font-size:0.8rem;}
+.badge.top1{background:var(--accent);color:#000;}
+.badge.top8{background:var(--primary);color:#fff;}
+footer{margin-top:2rem;padding:1rem;text-align:center;color:var(--muted);}
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;}
+.modal-content{background:var(--card);padding:2rem;border-radius:12px;max-width:500px;width:90%;}
