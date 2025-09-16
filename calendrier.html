@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>ReviveMC - Calendrier des qualifs</title>
+  <meta name="description" content="Calendrier des tournois partenaires ReviveMC : dates, formats, points à la clé, statut et liens utiles." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="data.js"></script>
+</head>
+<body>
+<header>
+  <div class="logo">ReviveMC</div>
+  <nav aria-label="Navigation principale">
+    <a href="index.html">Accueil</a>
+    <a href="calendrier.html" class="active" aria-current="page">Calendrier</a>
+    <a href="classement.html">Classement</a>
+  </nav>
+  <button id="toggleTheme" aria-label="Basculer thème">🌙</button>
+</header>
+
+<main class="container">
+  <h1>Calendrier des qualifs partenaires</h1>
+
+  <section class="card" aria-labelledby="filtres-title">
+    <h2 id="filtres-title">Filtres</h2>
+    <div class="filters" style="display:grid;gap:.5rem;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-top:.5rem">
+      <label>
+        <span>Mois</span>
+        <select id="filterMonth" aria-label="Filtrer par mois"></select>
+      </lab
