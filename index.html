@@ -1,93 +1,14 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>ReviveMC - Accueil</title>
-  <meta name="description" content="Circuit partenaires ReviveMC - cumule des points officiels et qualifie-toi pour la grande finale BedWars.">
-  <link rel="stylesheet" href="style.css">
-  <script src="data.js"></script>
-</head>
-<body>
-  <header>
-    <div class="logo">ReviveMC</div>
-    <nav>
-      <a href="index.html" class="active">Accueil</a>
-      <a href="calendrier.html">Calendrier</a>
-      <a href="classement.html">Classement</a>
-    </nav>
-    <button id="toggleTheme">🌙</button>
-  </header>
-  <main class="container">
-    <section class="hero">
-      <h1>ReviveMC — Circuit Partenaires</h1>
-      <p>Cumule des points officiels sur des tournois partenaires. Les <strong>8 meilleurs</strong> vont en <strong>Finale BedWars</strong>.</p>
-      <p>
-        <a href="calendrier.html" class="btn">Voir le calendrier</a>
-        <a href="classement.html" class="btn">Voir le classement</a>
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>Finale BedWars (Top 8)</h2>
-      <p>Format 4v4 BedWars avec les 8 meilleurs joueurs du classement officiel. Phase de poules → demi-finales → grande finale.</p>
-    </section>
-
-    <section id="nextTournament" class="card">
-      <h2>Prochain tournoi</h2>
-      <div id="tournamentCard"></div>
-      <div id="countdown"></div>
-    </section>
-
-    <section id="inscrire" class="card">
-      <h2>Comment inscrire son tournoi</h2>
-      <ol>
-        <li>Contacter <strong>@Jojo</strong> sur Discord</li>
-        <li>Rejoindre le <a href="#">Discord ReviveMC</a></li>
-        <li>Préparer : règles, format, date/heure, capacité, barème proposé</li>
-        <li>Attendre validation “Partenaire ReviveMC” + ajout au calendrier</li>
-      </ol>
-      <p><strong>FAQ rapide :</strong> validation sous 1 semaine, branding ReviveMC obligatoire.</p>
-    </section>
-  </main>
-  <footer>
-    <span id="lastUpdate"></span>
-  </footer>
-
-  <script>
-    function formatDateFR(dateStr){
-      return new Intl.DateTimeFormat('fr-FR',{dateStyle:'full',timeStyle:'short'}).format(new Date(dateStr));
-    }
-    function getNextTournament(data){
-      const now=new Date();
-      return data.tournaments.filter(t=>new Date(t.date)>now).sort((a,b)=>new Date(a.date)-new Date(b.date))[0];
-    }
-    function renderNextTournamentCard(){
-      const t=getNextTournament(window.REVIVE_DATA);
-      if(!t)return;
-      document.getElementById('tournamentCard').innerHTML=`
-        <p><strong>${t.name}</strong> — ${t.partner}</p>
-        <p>${formatDateFR(t.date)} • ${t.format} ${t.mode}</p>
-        <p>Status: ${t.status}</p>
-      `;
-      const target=new Date(t.date).getTime();
-      const el=document.getElementById('countdown');
-      setInterval(()=>{
-        const diff=target-Date.now();
-        if(diff<=0){el.textContent="En cours ou terminé";return;}
-        const d=Math.floor(diff/86400000),
-              h=Math.floor((diff%86400000)/3600000),
-              m=Math.floor((diff%3600000)/60000),
-              s=Math.floor((diff%60000)/1000);
-        el.textContent=`${d}j ${h}h ${m}m ${s}s`;
-      },1000);
-    }
-    document.getElementById('lastUpdate').textContent="Dernière mise à jour : "+formatDateFR(window.REVIVE_DATA.updatedAt);
-    renderNextTournamentCard();
-
-    const toggleBtn=document.getElementById('toggleTheme');
-    function setTheme(mode){document.documentElement.classList.toggle('light',mode==='light');localStorage.setItem('theme',mode);}
-    toggleBtn.onclick=()=>{const mode=document.documentElement.classList.contains('light')?'dark':'light';setTheme(mode);};
-    if(localStorage.getItem('theme')==='light')setTheme('light');
-  </script>
-</body>
-</html>
+<!doctype html><html lang='fr'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Codebrain — Création, montage & live</title><meta name='description' content='Codebrain — création de contenu, montage vidéo, réalisation live et événementiel.'><meta property='og:title' content='Codebrain — Création, montage & live'><meta property='og:description' content='Création. Montage. Live. Événementiel.'><meta property='og:type' content='website'><meta property='og:url' content='https://codebrain.me/'><meta property='og:image' content='https://codebrain.me/assets/og-codebrain.jpg'><meta name='theme-color' content='#080808'><link rel='icon' href='assets/favicon.svg'><link rel='stylesheet' href='style.css'></head><body>
+<div class='noise'></div><header><a class='logo' href='#top'>CODEBRAIN<span>.</span></a><nav><a href='#about'>À propos</a><a href='#work'>Portfolio</a><a href='#showreel'>Showreel</a><a href='#contact'>Contact</a></nav><button id='theme' aria-label='Changer le thème'>◐</button></header>
+<main id='top'><section class='hero reveal'><div class='eyebrow'><i></i> CRÉATEUR • MONTEUR • RÉALISATEUR LIVE</div><h1>JE CRÉE<br>DES <em>TRUCS</em><br>QU'ON RETIENT.</h1><p>Je suis Codebrain. Je transforme des idées en vidéos, lives et événements pensés pour raconter quelque chose — pas juste remplir un écran.</p><div class='actions'><a class='btn primary' href='#work'>Voir mon portfolio ↗</a><a class='btn' href='https://discord.gg/' target='_blank'>Rejoindre le Discord</a></div><div class='socials'><a href='https://www.youtube.com/@codebrainL'>YouTube</a><a href='https://www.twitch.tv/codebrain_'>Twitch</a><a href='https://www.tiktok.com/@codebrain_'>TikTok</a></div></section>
+<section class='pulse reveal'><div><span class='live-dot'></span><small id='liveLabel'>PROCHAIN LIVE</small><strong id='liveTitle'>Live Codebrain</strong><span id='liveDate'>Samedi • 20:00</span></div><div class='latest'><small>DERNIÈRE VIDÉO</small><strong>La plus grosse explosion TNT de Minecraft</strong><a href='https://www.youtube.com/@codebrainL' target='_blank'>Regarder ↗</a></div></section>
+<section id='about' class='about reveal'><div><div class='tag'>01 — À PROPOS</div><h2>Créer, raconter,<br><span>faire vivre.</span></h2></div><div class='copy'><p>Je travaille à la croisée de la création de contenu, du montage, de la réalisation live et de l'événementiel. Mon terrain de jeu : transformer une idée brute en expérience claire, rythmée et mémorable.</p><p>J'ai commencé par créer mes propres contenus, puis j'ai progressivement pris en charge des productions plus ambitieuses : événements Minecraft, lives multicam, best-of, storytelling et direction de projets.</p><a href='#cv'>Voir mon parcours →</a></div></section>
+<section class='skills reveal'><div class='skill'><b>01</b><h3>Montage vidéo</h3><p>Storytelling, rythme, sound design, dérush et finition.</p></div><div class='skill'><b>02</b><h3>Réalisation live</h3><p>Direction du direct, OBS, coordination et production événementielle.</p></div><div class='skill'><b>03</b><h3>Création</h3><p>Concept, écriture, tournage, identité et publication.</p></div><div class='skill'><b>04</b><h3>Événementiel</h3><p>Conception de formats, organisation et expérience spectateur.</p></div></section>
+<section class='tools reveal'><span>DAVINCI RESOLVE</span><span>PREMIERE PRO</span><span>AFTER EFFECTS</span><span>BLENDER</span><span>OBS</span><span>PHOTOSHOP</span></section>
+<section id='work' class='work'><div class='section-head reveal'><div><div class='tag'>02 — PORTFOLIO</div><h2>Projets<br><span>sélectionnés.</span></h2></div><div class='filters'><button class='active' data-filter='all'>Tout</button><button data-filter='montage'>Montage</button><button data-filter='live'>Live</button><button data-filter='content'>Création</button></div></div><div id='projectGrid' class='grid'></div></section>
+<section id='showreel' class='showreel reveal'><div class='play'>▶</div><div><div class='tag'>03 — SHOWREEL</div><h2>90 secondes.<br>Pas de blabla.</h2><p>Une sélection condensée de montage, réalisation et création.</p></div></section>
+<section class='numbers reveal'><div><strong>4+</strong><span>domaines de production</span></div><div><strong>100%</strong><span>passionné par le storytelling</span></div><div><strong>∞</strong><span>idées en attente</span></div></section>
+<section id='cv' class='cv reveal'><div><div class='tag'>04 — PARCOURS</div><h2>Apprendre en<br><span>faisant.</span></h2></div><div class='timeline'><article><time>AUJOURD'HUI</time><h3>Création & production</h3><p>Codebrain — vidéos, lives, événements et prestations de montage.</p></article><article><time>2025 →</time><h3>ReviveMC</h3><p>Réalisation live, production et création autour d'événements Minecraft.</p></article><article><time>DÉBUT</time><h3>Premiers contenus</h3><p>Apprentissage du montage, du direct et de la narration par la pratique.</p></article></div></section>
+<section id='contact' class='contact reveal'><p>UNE IDÉE ? UN PROJET ?</p><h2>On fait un truc<br><span>mémorable ?</span></h2><div class='actions'><a class='btn primary' href='https://discord.gg/'>Me contacter sur Discord ↗</a><a class='btn' href='#work'>Voir le portfolio</a></div></section></main>
+<footer><a class='logo' href='#top'>CODEBRAIN<span>.</span></a><p>Création • Montage • Live • Événementiel</p><div><a href='https://www.youtube.com/@codebrainL'>YT</a><a href='https://www.twitch.tv/codebrain_'>TW</a><a href='https://www.tiktok.com/@codebrain_'>TT</a></div><small>© <span id='year'></span> Codebrain</small></footer>
+<div id='modal' class='modal'><button class='close'>×</button><div id='modalBody'></div></div><script src='script.js'></script></body></html>
