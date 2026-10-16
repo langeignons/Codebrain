@@ -1,0 +1,203 @@
+<!doctype html><html lang='fr'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Codebrain | Création, montage & live</title><meta name='description' content='Codebrain : création de contenu, montage vidéo, réalisation live et évènementiel.'><meta name="robots" content="index, follow"><meta property='og:title' content='Codebrain | Création, montage & live'><meta property='og:description' content='Création. Montage. Live. Évènementiel.'><meta property='og:type' content='website'><meta property='og:url' content='https://codebrain.me/'><meta property='og:image' content='https://codebrain.me/assets/og-codebrain.jpg'><meta name='theme-color' content='#18191C'><link rel="canonical" href="https://codebrain.me/"><link rel='icon' href='assets/favicon.png'><link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css'><link rel='stylesheet' href='style.css'><style>
+/* Accueil tournoi : styles limités au nouveau bloc. */
+section.tournament-home { padding: clamp(36px, 5vw, 76px) 8vw 28px; border-bottom: 1px solid var(--line); }
+.tournament-topline { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 32px; }
+.tournament-topline time { font-size: 12px; color: var(--muted); }
+.tournament-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; gap: clamp(32px, 5vw, 76px); }
+.tournament-copy h2 { font-size: clamp(34px, 4.1vw, 64px); line-height: 1.12; margin: 0 0 20px; letter-spacing: .025em; }
+.tournament-copy h2 span { color: var(--accent); }
+.tournament-copy > p { max-width: 480px; color: var(--muted); font-size: 15px; line-height: 1.65; }
+.tournament-countdown { display: flex; align-items: stretch; gap: 10px; flex-wrap: wrap; margin-top: 30px; font-variant-numeric: tabular-nums; }
+.countdown-part { min-width: 88px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.countdown-part strong { display: block; font: 600 clamp(30px, 3vw, 44px)/1.1 var(--display); }
+.countdown-part > span { display: block; margin-top: 7px; color: var(--muted); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.tournament-countdown [hidden], .teaser-frame [hidden] { display: none; }
+.tournament-copy .tournament-timing { font-size: 11px; margin-top: 12px; min-height: 18px; }
+.tournament-copy .actions { margin-top: 24px; }
+.tournament-teaser { width: 100%; max-width: 420px; justify-self: end; }
+.teaser-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+.teaser-heading h3 { margin: 0; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; }
+.teaser-heading > span { color: var(--muted); font-size: 10px; }
+.teaser-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.teaser-pending { display: flex; height: 100%; padding: 20px; align-items: center; justify-content: center; flex-direction: column; gap: 10px; text-align: center; }
+.teaser-pending strong { font-size: 13px; font-weight: 600; }
+.teaser-pending > span:last-child { font-size: 10px; color: var(--muted); }
+.teaser-mark { font-size: 20px; color: var(--muted); margin-bottom: 4px; }
+.teaser-launch { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 20px; cursor: pointer; background: #18191c; color: #f4f4f2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+.teaser-launch::after { content: ''; position: absolute; inset: 0; background: #18191c55; }
+.teaser-launch img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.teaser-play { display: grid; place-items: center; width: 56px; height: 56px; padding-left: 3px; border: 1px solid #dadadd88; border-radius: 50%; background: #18191c99; font-size: 18px; transition: transform .25s ease, background-color .25s ease; }
+.teaser-watch { font-size: 12px; font-weight: 600; text-shadow: 0 1px 8px #18191c; }
+.teaser-play, .teaser-watch { position: relative; z-index: 1; }
+.teaser-launch:hover img { transform: scale(1.035); }
+.teaser-launch:hover .teaser-play { background: var(--accent); transform: scale(1.05); }
+.teaser-launch:active .teaser-play { transform: scale(.97); }
+.teaser-frame iframe, .teaser-frame video { display: block; width: 100%; height: 100%; position: absolute; inset: 0; border: 0; background: #18191c; }
+.teaser-caption { font-size: 11px; color: var(--muted); margin: 12px 0 0; }
+.tournament-next { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 42px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); text-decoration: none; }
+.tournament-next:hover { color: var(--text); }
+.tournament-next span { transition: transform .25s ease; }
+.tournament-next:hover span { transform: translateY(3px); }
+@media (max-width: 1050px) {
+  .tournament-layout { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 30px; }
+  .tournament-copy h2 { font-size: clamp(29px, 3.8vw, 44px); }
+  .countdown-part { min-width: 70px; padding: 12px; }
+  .countdown-part strong { font-size: 30px; }
+}
+@media (max-width: 800px) {
+  section.tournament-home { padding: 36px 6vw 24px; }
+  .tournament-layout { grid-template-columns: 1fr; gap: 32px; }
+  .tournament-topline { margin-bottom: 28px; flex-wrap: wrap; gap: 10px; }
+  .tournament-copy h2 { font-size: clamp(28px, 7vw, 48px); }
+  .tournament-countdown { gap: 8px; }
+  .countdown-part { min-width: 0; flex: 0 1 calc((100% - 24px) / 4); max-width: 80px; padding: 12px 8px; }
+  .countdown-part strong { font-size: 28px; }
+  .tournament-teaser { max-width: 380px; justify-self: start; }
+  .tournament-next { margin-top: 30px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tournament-copy { animation: tournament-enter .65s cubic-bezier(.22, 1, .36, 1) both; }
+  .tournament-teaser { animation: tournament-enter .65s .08s cubic-bezier(.22, 1, .36, 1) both; }
+  @keyframes tournament-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+}
+@media (prefers-reduced-motion: reduce) { .teaser-launch:hover img, .teaser-launch:hover .teaser-play, .teaser-launch:active .teaser-play, .tournament-next:hover span { transform: none; } }
+</style></head><body>
+<div class='noise'></div><header><a class='logo' href='#top'>CODEBRAIN<span>.</span></a><nav><a href='#tournoi'>Tournoi</a><a href='#about'>À propos</a><a href='#work'>Portfolio</a><a href='#contact'>Contact</a></nav><button id='theme' aria-label='Changer le thème'>◐</button></header>
+<main id='top'>
+<section id="tournoi" class="tournament-home" aria-labelledby="tournament-title" data-tournament-date="2026-11-28" data-tournament-start="2026-11-28T20:00:00+01:00" data-teaser-url="https://www.youtube.com/watch?v=0OxpdUx6tyc">
+  <!-- Tournoi : 28 novembre 2026 à 20 h, heure de Paris (UTC+1). -->
+  <div class="tournament-topline"><span class="tag">L’événement à venir</span><time datetime="2026-11-28T20:00:00+01:00">28 novembre 2026 · 20 h, heure de Paris</time></div>
+  <div class="tournament-layout">
+    <div class="tournament-copy">
+      <h2 id="tournament-title">Codebrain<br>Tournament<span>.</span></h2>
+      <p>16 joueurs. 8 duos. Un titre par équipe, puis un duel pour le titre individuel.</p>
+      <div class="tournament-countdown" role="timer" aria-live="off" aria-label="Compte à rebours avant le tournoi">
+        <div class="countdown-part"><strong data-countdown="days">—</strong><span>jours</span></div>
+        <div class="countdown-part countdown-exact" hidden><strong data-countdown="hours">00</strong><span>heures</span></div>
+        <div class="countdown-part countdown-exact" hidden><strong data-countdown="minutes">00</strong><span>minutes</span></div>
+        <div class="countdown-part countdown-exact" hidden><strong data-countdown="seconds">00</strong><span>secondes</span></div>
+      </div>
+      <p class="tournament-timing" id="tournament-timing">28 novembre 2026 · 20 h, heure de Paris</p>
+      <div class="actions"><a class="btn primary" href="reglement-tournoi.html">Lire le règlement ↗</a><a class="btn" href="https://codebrain.me/discord">Rejoindre le Discord</a></div>
+    </div>
+    <div class="tournament-teaser">
+      <div class="teaser-heading"><h3>Le teaser</h3><span>À découvrir</span></div>
+      <div class="teaser-frame" id="teaser-frame">
+        <div class="teaser-pending" id="teaser-pending"><span class="teaser-mark" aria-hidden="true">▶</span><strong>Teaser à venir</strong><span>[Lien de la vidéo à ajouter]</span></div>
+        <button type="button" class="teaser-launch" id="teaser-launch" aria-label="Lire le teaser du Codebrain Tournament" hidden><span class="teaser-play" aria-hidden="true">▶</span><span class="teaser-watch">Voir le teaser</span></button>
+      </div>
+      <p class="teaser-caption">Le tournoi, en quelques images.</p>
+    </div>
+  </div>
+  <a class="tournament-next" href="#presentation">Découvrir Codebrain <span aria-hidden="true">↓</span></a>
+</section>
+
+<section id='presentation' class='hero reveal'><h1>JE CRÉE<br>DES <em>TRUCS</em><br>QU'ON RETIENT.</h1><p>Je suis Codebrain. Je transforme des idées en vidéos, lives et évènements pensés pour raconter quelque chose : pas juste remplir un écran.</p><div class='actions'><a class='btn primary' href='#work'>Voir mon portfolio ↗</a><a class='btn' href='https://codebrain.me/discord' target='_blank'>Rejoindre le Discord</a></div><div class='socials'><a href='https://www.youtube.com/@codebrainL'>YouTube</a><a href='https://www.twitch.tv/codebrain_'>Twitch</a><a href='https://www.tiktok.com/@codebrain_'>TikTok</a></div></section>
+<section class='pulse reveal'><div><span class='live-dot'></span><small id='liveLabel'>PROCHAIN LIVE</small><strong id='liveTitle'>Live Codebrain</strong><span id='liveDate'>Samedi • 20:00</span></div><div class='latest'><small>DERNIÈRE VIDÉO</small><strong>La plus grosse explosion TNT de Minecraft</strong><a href='https://www.youtube.com/@codebrainL' target='_blank'>Regarder ↗</a></div></section>
+<section id='about' class='about reveal'><div><div class='tag'>01 | À PROPOS</div><h2>Créer, raconter,<br><span>faire vivre.</span></h2></div><div class='copy'><p>Je travaille à la croisée de la création de contenu, du montage, de la réalisation live et de l'évènementiel. Mon terrain de jeu : transformer une idée brute en expérience claire, rythmée et mémorable.</p><p>J'ai commencé par créer mes propres contenus, puis j'ai progressivement pris en charge des productions plus ambitieuses : évènements Minecraft, lives multicam, best-of, storytelling et direction de projets.</p><a href='#cv'>Voir mon parcours →</a></div></section>
+<section class='skills reveal'><div class='skill'><b>01</b><h3>Montage vidéo</h3><p>Storytelling, rythme, sound design, dérush et finition.</p></div><div class='skill'><b>02</b><h3>Réalisation live</h3><p>Direction du direct, OBS, coordination et production évènementielle.</p></div><div class='skill'><b>03</b><h3>Création</h3><p>Concept, écriture, tournage, identité et publication.</p></div><div class='skill'><b>04</b><h3>Évènementiel</h3><p>Conception de formats, organisation et expérience spectateur.</p></div></section>
+<section class='tools reveal'><span>DAVINCI RESOLVE</span><span>PREMIERE PRO</span><span>AFTER EFFECTS</span><span>BLENDER</span><span>OBS</span><span>PHOTOSHOP</span></section>
+<section id='work' class='work'><div class='section-head reveal'><div><div class='tag'>02 | PORTFOLIO</div><h2>Projets<br><span>sélectionnés.</span></h2></div><div class='filters'><button class='active' data-filter='all'>Tout</button><button data-filter='montage'>Montage</button><button data-filter='live'>Live</button><button data-filter='content'>Création</button></div></div><div id='projectGrid' class='grid'></div></section>
+
+<section class='numbers reveal'><div><strong>4+</strong><span>domaines de production</span></div><div><strong>100%</strong><span>passionné par le storytelling</span></div><div><strong>∞</strong><span>idées en attente</span></div></section>
+<section id='cv' class='cv reveal'><div><div class='tag'>03 | PARCOURS</div><h2>Apprendre en<br><span>faisant.</span></h2></div><div class='timeline'><article><time>AUJOURD'HUI</time><h3>Création & production</h3><p>Codebrain | vidéos, lives, évènements et prestations de montage.</p></article><article><time>2025 →</time><h3>ReviveMC</h3><p>Réalisation live, production et création autour d'évènements Minecraft.</p></article><article><time>DÉBUT</time><h3>Premiers contenus</h3><p>Apprentissage du montage, du direct et de la narration par la pratique.</p></article></div></section>
+<section id='contact' class='contact reveal'><p>UNE IDÉE ? UN PROJET ?</p><h2>On fait un truc<br><span>mémorable ?</span></h2><div class='actions'><a class='btn primary' href='https://codebrain.me/discord'>Me contacter sur Discord ↗</a><a class='btn' href='#work'>Voir le portfolio</a></div></section></main>
+<footer><a class='logo' href='#top'>CODEBRAIN<span>.</span></a><p>Création, Montage, Live & Évènementiel</p><div class='social-links'><a href='https://www.youtube.com/@codebrainL' target='_blank' rel='noopener' aria-label='YouTube'><i class='bi bi-youtube'></i></a><a href='https://www.twitch.tv/codebrain_' target='_blank' rel='noopener' aria-label='Twitch'><i class='bi bi-twitch'></i></a><a href='https://www.tiktok.com/@codebrain_' target='_blank' rel='noopener' aria-label='TikTok'><i class='bi bi-tiktok'></i></a></div><small>© <span id='year'></span> Codebrain</small></footer>
+<div id='modal' class='modal'><button class='close'>×</button><div id='modalBody'></div></div><script src='script.js'></script><script>
+(() => {
+  const event = document.querySelector('#tournoi');
+  if (!event) return;
+  const countdown = event.querySelector('.tournament-countdown');
+  const timing = event.querySelector('#tournament-timing');
+  const exactStart = event.dataset.tournamentStart.trim();
+  // L’heure exacte doit inclure son décalage UTC pour être identique partout.
+  const hasExactStart = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})$/.test(exactStart) && Number.isFinite(Date.parse(exactStart));
+  const dayParts = event.dataset.tournamentDate.split('-').map(Number);
+  const eventDay = Date.UTC(dayParts[0], dayParts[1] - 1, dayParts[2]);
+  let clock;
+  function setNumber(unit, number) {
+    const element = countdown.querySelector(`[data-countdown="${unit}"]`);
+    const next = String(number).padStart(2, '0');
+    if (element.textContent !== next) element.textContent = next;
+  }
+  function tick() {
+    if (hasExactStart) {
+      const remaining = Math.max(0, Date.parse(exactStart) - Date.now());
+      const seconds = Math.floor(remaining / 1000);
+      setNumber('days', Math.floor(seconds / 86400));
+      setNumber('hours', Math.floor(seconds / 3600) % 24);
+      setNumber('minutes', Math.floor(seconds / 60) % 60);
+      setNumber('seconds', seconds % 60);
+      if (remaining === 0) {
+        timing.textContent = 'L’heure du tournoi est arrivée.';
+        countdown.setAttribute('aria-label', 'Compte à rebours terminé');
+        if (clock) clearInterval(clock);
+      }
+    } else {
+      // Sans heure validée, seul un nombre de jours calendaires est affiché.
+      const now = new Date();
+      const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+      const days = Math.round((eventDay - today) / 86400000);
+      setNumber('days', Math.max(0, days));
+      timing.textContent = days > 0 ? '[Heure et fuseau horaire du tournoi à définir]' : days === 0 ? 'C’est aujourd’hui · [Heure du tournoi à définir]' : 'La date du tournoi est passée.';
+      countdown.setAttribute('aria-label', days > 0 ? `${days} jours calendaires avant le 28 novembre 2026` : days === 0 ? 'Le tournoi est prévu aujourd’hui' : 'La date du tournoi est passée');
+    }
+  }
+  if (hasExactStart) {
+    event.querySelectorAll('.countdown-exact').forEach(element => element.hidden = false);
+    timing.textContent = new Intl.DateTimeFormat('fr-FR', {dateStyle: 'long', timeStyle: 'short'}).format(new Date(exactStart)) + ' · votre heure locale';
+  }
+  tick();
+  clock = window.setInterval(tick, hasExactStart ? 1000 : 60000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) tick(); });
+
+  const rawTeaser = event.dataset.teaserUrl.trim();
+  if (!rawTeaser) return;
+  let source;
+  try { source = new URL(rawTeaser, document.baseURI); } catch (_) { return; }
+  if (!['https:', 'http:'].includes(source.protocol)) return;
+  const host = source.hostname.toLowerCase();
+  let videoId = null;
+  if (host === 'youtu.be') videoId = source.pathname.split('/')[1];
+  if (['youtube.com', 'www.youtube.com', 'm.youtube.com', 'youtube-nocookie.com', 'www.youtube-nocookie.com'].includes(host)) {
+    videoId = source.searchParams.get('v') || source.pathname.match(/^\/(?:embed|shorts|live)\/([^/]+)/)?.[1];
+  }
+  if (!/^[A-Za-z0-9_-]{11}$/.test(videoId || '')) videoId = null;
+  const localVideo = /\.(mp4|webm|ogg)$/i.test(source.pathname);
+  const frame = event.querySelector('#teaser-frame');
+  const launch = event.querySelector('#teaser-launch');
+  const pending = event.querySelector('#teaser-pending');
+  pending.hidden = true;
+  launch.hidden = false;
+  if (videoId) {
+    const poster = document.createElement('img');
+    poster.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    poster.alt = '';
+    poster.loading = 'lazy';
+    launch.prepend(poster);
+  }
+  launch.addEventListener('click', () => {
+    if (videoId) {
+      const player = document.createElement('iframe');
+      player.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+      player.title = 'Teaser du Codebrain Tournament';
+      player.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      player.allowFullscreen = true;
+      player.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.replaceChildren(player);
+      player.focus();
+    } else if (localVideo) {
+      const player = document.createElement('video');
+      player.src = source.href;
+      player.controls = true;
+      player.playsInline = true;
+      player.setAttribute('aria-label', 'Teaser du Codebrain Tournament');
+      frame.replaceChildren(player);
+      player.focus();
+      player.play().catch(() => {});
+    } else {
+      window.open(source.href, '_blank', 'noopener,noreferrer');
+    }
+  });
+})();
+</script></body></html>
